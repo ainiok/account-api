@@ -14,3 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::group(['guard' => 'admin', 'namespace' => 'Admin', 'prefix' => 'admin'], function () {
+    Route::get('/login', 'LoginController@showLoginForm')->name('admin.login');
+    Route::post('/login', 'LoginController@login');
+    Route::get('/index', 'LoginController@index');
+});
