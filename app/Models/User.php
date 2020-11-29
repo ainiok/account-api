@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'uid', 'name', 'email', 'password'
     ];
 
     /**
@@ -35,5 +35,18 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'forbidden'         => 'boolean',
+        'second_auth'       => 'boolean'
     ];
+
+    /**
+     * 密码加密
+     *
+     * @param $value string
+     * @return string
+     */
+    public function setPasswordAttribute($value)
+    {
+        return $this->attributes['password'] = bcrypt(md5($value));
+    }
 }
