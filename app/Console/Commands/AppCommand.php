@@ -58,8 +58,6 @@ class AppCommand extends Command
      */
     protected function build()
     {
-        // 创建配置文件
-        $this->execShellPrint('cp .env.example .env');
         // 生成加密密钥
         $this->execShellPrint('php artisan key:generate');
         // 生成passport 加密的keys
@@ -91,12 +89,6 @@ class AppCommand extends Command
 
     protected function reset()
     {
-        // 创建配置文件
-        $this->execShellPrint('cp .env.example .env');
-        // 生成加密密钥
-        $this->execShellPrint('php artisan key:generate');
-        // 生成passport 加密的keys
-        $this->execShellPrint('php artisan passport:keys');
         // 迁移数据库
         $this->execShellPrint('php artisan migrate --force');
         // 这一步没有执行的话，填充数据有可能会报 xxxTablesSeeder 不存在

@@ -19,4 +19,6 @@ Route::group(['guard' => 'admin', 'namespace' => 'Admin', 'prefix' => 'admin'], 
     Route::get('/login', 'LoginController@showLoginForm')->name('admin.login');
     Route::post('/login', 'LoginController@login');
     Route::get('/index', 'LoginController@index');
+    // app
+    Route::post('app', 'AppController@store');
 });
