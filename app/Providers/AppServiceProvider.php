@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Routing\Events\RouteMatched;
 use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Passport\Passport;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,7 +16,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        //[自定义迁移]忽略Passport的默认迁移
+        Passport::ignoreMigrations();
     }
 
     /**
