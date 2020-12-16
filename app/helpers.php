@@ -8,9 +8,6 @@
 if (!function_exists('uuid_gen')) {
     /**
      * 生成32位的uuid
-     *
-     * @return string
-     * @throws Exception
      */
     function uuid_gen()
     {
