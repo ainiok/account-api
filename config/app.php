@@ -229,4 +229,15 @@ return [
 
     ],
 
+    'captcha' => [
+        'sms'  => [
+            'expired' => 60,
+            'length'  => 6
+        ],
+        'mail' => [
+            'expired'   => 24 * 60,
+            'length'    => 6,
+            'try_times' => 5
+        ]
+    ],
 ];
