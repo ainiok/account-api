@@ -18,6 +18,18 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        'Illuminate\Database\Events\QueryExecuted' => [
+            '\App\Listeners\QueryListener',
+        ],
+        'App\Events\LoginEvent'   => [
+            '\App\Listeners\LoginListener',
+        ],
+        'App\Events\LogoutEvent'  => [
+            '\App\Listeners\LogoutListener',
+        ],
+        'App\Events\LockoutEvent' => [
+            '\App\Listeners\LoginLockoutListener',
+        ],
     ];
 
     /**
