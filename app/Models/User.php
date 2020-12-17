@@ -40,6 +40,16 @@ class User extends Authenticatable
     ];
 
     /**
+     * 关联用户登录历史
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function loginHistories()
+    {
+        return $this->morphMany(LoginHistory::class, 'user');
+    }
+
+    /**
      * 密码加密
      *
      * @param $value string
