@@ -2,18 +2,22 @@
 
 namespace App\Exceptions;
 
+use App\Http\Controllers\Traits\ApiResponse;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
+
+    use ApiResponse;
     /**
+     * 不会被记录的异常类型数组
      * A list of the exception types that are not reported.
      *
      * @var array
      */
     protected $dontReport = [
-        //
+        LoginException::class
     ];
 
     /**
@@ -50,6 +54,12 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if (!env('APP_DEBUG', false)) {
+            switch (get_class($exception)) {
+                case LoginException::class:
+                    return $this->failed($exception->getMessage(), $exception->data());
+            }
+        }
         return parent::render($request, $exception);
     }
 }
