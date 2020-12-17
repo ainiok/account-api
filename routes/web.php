@@ -14,6 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/test', 'HomeController@index');
 
 Route::group(['guard' => 'admin', 'namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::get('/login', 'LoginController@showLoginForm')->name('admin.login');
