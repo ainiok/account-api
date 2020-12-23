@@ -4,6 +4,7 @@ class UserTestCest
 {
     public function _before(ApiTester $I)
     {
+        $I->module = '[用户]';
     }
 
     // tests

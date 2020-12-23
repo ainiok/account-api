@@ -2,5 +2,12 @@ actor: ApiTester
 modules:
     enabled:
         - \Helper\Api
+        - Laravel5:
+            environment_file: .env.testing
+        - Db:
+              dsn: "mysql:host=127.0.0.1;dbname=account"
+              user: "root"
+              password: "root"
+              cleanup: true
         - REST:
             depends: Laravel5
