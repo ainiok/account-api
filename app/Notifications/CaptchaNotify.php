@@ -2,7 +2,10 @@
 
 namespace App\Notifications;
 
+use App\Channels\SmsChannel;
+use App\Common\SmsNotification;
 use App\Models\MailCaptcha;
+use App\Models\SmsCaptcha;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -28,25 +31,38 @@ class CaptchaNotify extends Notification
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return array
      */
     public function via($notifiable)
     {
         switch ($this->driver) {
             case 'sms':
-                return [];
+                return [SmsChannel::class];
             case 'mail':
                 return ['mail'];
             default:
-                return [];
+                return [SmsChannel::class];
         }
+    }
+
+    /**
+     * 发送短信通知
+     *
+     * @param $notifiable
+     * @return SmsNotification
+     */
+    public function toSms($notifiable)
+    {
+        $code    = SmsCaptcha::genCodeAndStore($notifiable->phone);
+        $message = trans('sms.captcha', ['code' => $code]);
+        return new SmsNotification($message, $notifiable->phone);
     }
 
     /**
      * Get the mail representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
@@ -60,7 +76,7 @@ class CaptchaNotify extends Notification
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return array
      */
     public function toArray($notifiable)
