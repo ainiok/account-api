@@ -54,12 +54,12 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if (!env('APP_DEBUG', false)) {
-            switch (get_class($exception)) {
-                case LoginException::class:
-                    return $this->failed($exception->getMessage(), $exception->data());
-            }
+        if (env('APP_DEBUG', false)) {
+            return parent::render($request, $exception);
         }
-        return parent::render($request, $exception);
+        switch (get_class($exception)) {
+            case LoginException::class:
+                return $this->failed($exception->getMessage(), $exception->data());
+        }
     }
 }

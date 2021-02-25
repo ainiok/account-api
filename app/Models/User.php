@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -42,9 +43,9 @@ class User extends Authenticatable
     /**
      * 关联用户登录历史
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     * @return MorphMany
      */
-    public function loginHistories()
+    public function loginHistories(): MorphMany
     {
         return $this->morphMany(LoginHistory::class, 'user');
     }
@@ -55,18 +56,8 @@ class User extends Authenticatable
      * @param $value string
      * @return string
      */
-    public function setPasswordAttribute($value)
+    public function setPasswordAttribute(string $value): string
     {
         return $this->attributes['password'] = bcrypt(md5($value));
-    }
-
-    /**
-     * Get the route key for the model.
-     *
-     * @return string
-     */
-    public function getRouteKeyName()
-    {
-        return 'uid';
     }
 }

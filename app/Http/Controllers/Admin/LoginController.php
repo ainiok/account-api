@@ -7,6 +7,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exceptions\LoginException;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -79,7 +80,6 @@ class LoginController extends Controller
         $this->incrementLoginAttempts($request);
 
         return $this->sendFailedLoginResponse($request);
-        dd("1111");
     }
 
     protected function validateLogin(Request $request)
@@ -115,15 +115,21 @@ class LoginController extends Controller
         return $this->limiter()->attempts($this->throttleKey($request));
     }
 
+    /**
+     * 确定用户被锁定后，返回剩余解锁时长。
+     *
+     * @param Request $request
+     * @throws LoginException
+     */
     protected function sendLockoutResponse(Request $request)
     {
         $seconds = $this->limiter()->availableIn(
             $this->throttleKey($request)
         );
-        $data = [
+        $data    = [
             'lockFlag' => 1,
-            'seconds' => $seconds
+            'seconds'  => $seconds
         ];
-        return '';
+        throw new LoginException('', $data);
     }
 }

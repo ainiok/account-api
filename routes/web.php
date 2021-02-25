@@ -14,10 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/user/{user}', function(\App\Models\User $user){
-    return response()->json($user);
-});
 Route::get('/user/list', function () {
+    return new \App\Http\Resources\UserCollection(\App\Models\User::paginate());
     return response()->json([
         ['id' => 1, 'name' => '张三', 'email' => '123@qq.com'],
         ['id' => 2, 'name' => '李四', 'email' => '456@qq.com'],
