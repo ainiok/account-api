@@ -35,3 +35,7 @@ Route::group(['guard' => 'admin', 'namespace' => 'Admin', 'prefix' => 'admin'], 
     // app
     Route::post('app', 'AppController@store');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

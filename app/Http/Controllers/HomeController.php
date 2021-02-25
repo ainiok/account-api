@@ -1,19 +1,28 @@
 <?php
-/**
- * Author: xiaojin
- * Email: job@ainiok.com
- * Date: 2020/12/17 17:51
- */
+
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Notifications\CaptchaNotify;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
     public function index()
     {
-        $user = User::where('email', '763303918@qq.com')->first();
-        $user->notify(new CaptchaNotify('mail'));
+        return view('home');
     }
 }
