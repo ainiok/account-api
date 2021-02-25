@@ -30,6 +30,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\LockoutEvent' => [
             '\App\Listeners\LoginLockoutListener',
         ],
+        'App\Events\PasswordResetEvent' => [
+            '\App\Listeners\PasswordResetListener'
+        ]
     ];
 
     /**

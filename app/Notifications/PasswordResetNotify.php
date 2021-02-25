@@ -3,15 +3,12 @@
 namespace App\Notifications;
 
 use App\Channels\SmsChannel;
-use App\Common\SmsNotification;
-use App\Models\MailCaptcha;
-use App\Models\SmsCaptcha;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class CaptchaNotify extends Notification
+class PasswordResetNotify extends Notification
 {
     use Queueable;
 
@@ -21,7 +18,6 @@ class CaptchaNotify extends Notification
      * Create a new notification instance.
      *
      * @param string $driver
-     * @return void
      */
     public function __construct($driver = 'email')
     {
@@ -31,50 +27,37 @@ class CaptchaNotify extends Notification
     /**
      * Get the notification's delivery channels.
      *
-     * @param mixed $notifiable
+     * @param  mixed  $notifiable
      * @return array
      */
-    public function via($notifiable)
+    public function via($notifiable): array
     {
         switch ($this->driver) {
             case 'sms':
                 return [SmsChannel::class];
             default:
-                return ['email'];
+                return ['mail'];
         }
-    }
-
-    /**
-     * 发送短信通知
-     *
-     * @param $notifiable
-     * @return SmsNotification
-     */
-    public function toSms($notifiable)
-    {
-        $code    = SmsCaptcha::genCodeAndStore($notifiable->phone);
-        $message = trans('sms.captcha', ['code' => $code]);
-        return new SmsNotification($message, $notifiable->phone);
     }
 
     /**
      * Get the mail representation of the notification.
      *
-     * @param mixed $notifiable
+     * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
     {
-        $code = MailCaptcha::genCodeAndStore($notifiable->email);
-        return (new MailMessage())->view(
-            'emails.code', ['code' => $code]
-        )->subject(trans('email.captcha.subject'));
+        return (new MailMessage)
+                    ->line('The introduction to the notification.')
+                    ->action('Notification Action', url('/'))
+                    ->line('Thank you for using our application!');
     }
 
     /**
      * Get the array representation of the notification.
      *
-     * @param mixed $notifiable
+     * @param  mixed  $notifiable
      * @return array
      */
     public function toArray($notifiable)
