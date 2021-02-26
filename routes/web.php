@@ -25,7 +25,7 @@ Route::get('/user/list', function () {
 Route::get('/test', 'HomeController@index');
 Route::get('mail', function () {
     $user = \App\Models\User::where('email', '763303918@qq.com')->first();
-    (new \App\Notifications\CaptchaNotify())->toMail($user);
+    return (new \App\Notifications\CaptchaNotify())->toMail($user);
 });
 
 Route::group(['guard' => 'admin', 'namespace' => 'Admin', 'prefix' => 'admin'], function () {
@@ -39,3 +39,4 @@ Route::group(['guard' => 'admin', 'namespace' => 'Admin', 'prefix' => 'admin'], 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/tt', 'HomeController@test');

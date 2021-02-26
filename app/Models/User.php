@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Notifications\ResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -59,5 +60,16 @@ class User extends Authenticatable
     public function setPasswordAttribute(string $value): string
     {
         return $this->attributes['password'] = bcrypt(md5($value));
+    }
+
+    /**
+     * 自定义发送密码重置邮件通知.
+     *
+     * @param string $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPassword($token));
     }
 }

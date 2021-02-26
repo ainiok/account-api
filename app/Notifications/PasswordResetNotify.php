@@ -43,15 +43,17 @@ class PasswordResetNotify extends Notification
     /**
      * Get the mail representation of the notification.
      *
-     * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+        return (new MailMessage())
+            ->view('emails.password.reset', [
+                'name' => $notifiable->name,
+                'time' => date('Y-m-d H:i:s'),
+                'link' => env('APP_URL') . env('RESET_PASSWORD_URL')
+            ])
+            ->subject(trans('email.password_reset.subject', ['app_name'=>env('APP_NAME')]));
     }
 
     /**

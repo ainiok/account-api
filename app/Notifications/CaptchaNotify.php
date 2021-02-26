@@ -66,9 +66,9 @@ class CaptchaNotify extends Notification
     public function toMail($notifiable)
     {
         $code = MailCaptcha::genCodeAndStore($notifiable->email);
-        return (new MailMessage())->view(
+        return (new MailMessage)->view(
             'emails.code', ['code' => $code]
-        )->subject(trans('email.captcha.subject'));
+        )->subject(trans('email.captcha.subject', ['app_name' => env('APP_NAME')]));
     }
 
     /**
