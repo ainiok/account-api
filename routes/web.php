@@ -33,7 +33,7 @@ Route::group(['guard' => 'admin', 'namespace' => 'Admin', 'prefix' => 'admin'], 
     Route::post('/login', 'LoginController@login');
     Route::get('/index', 'LoginController@index');
     // app
-    Route::post('app', 'AppController@store');
+    Route::resource('app', 'AppController');
 });
 
 Auth::routes();

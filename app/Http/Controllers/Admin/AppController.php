@@ -9,11 +9,17 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AppCreateValidator;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
 use Laravel\Passport\Client as PassportModel;
 
 class AppController extends Controller
 {
+
+    public function index(Request $request)
+    {
+        return new \App\Http\Resources\AppCollection(\App\Models::paginate());
+    }
 
     /**
      * @OA\Post(

@@ -1,0 +1,107 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "接口文档",
+        "contact": {
+            "email": "job@ainiok.com"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "http://github.com/gruntjs/grunt/blob/master/LICENSE-MIT"
+        },
+        "version": "1.0.1"
+    },
+    "paths": {
+        "/admin/app": {
+            "post": {
+                "tags": [
+                    "管理员"
+                ],
+                "summary": "添加应用",
+                "operationId": "App\\Http\\Controllers\\Admin\\AppController::store",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "应用名称",
+                                        "type": "string"
+                                    },
+                                    "callback": {
+                                        "description": "回调地址",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    }
+                }
+            }
+        },
+        "/admin/login": {
+            "post": {
+                "tags": [
+                    "管理员"
+                ],
+                "summary": "管理员登录",
+                "operationId": "App\\Http\\Controllers\\Admin\\LoginController::login",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "description": "账号",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "path",
+                        "description": "密码",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "captcha",
+                        "in": "path",
+                        "description": "验证码",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    }
+                }
+            }
+        },
+        "/admin/index": {
+            "get": {
+                "tags": [
+                    "管理员"
+                ],
+                "summary": "管理员控制台",
+                "operationId": "App\\Http\\Controllers\\Admin\\LoginController::index",
+                "responses": {
+                    "200": {
+                        "description": "home index"
+                    }
+                }
+            }
+        }
+    }
+}
